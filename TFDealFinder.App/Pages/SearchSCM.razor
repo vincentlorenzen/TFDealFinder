@@ -1,0 +1,119 @@
+﻿@inject HttpClient _HttpClient
+@inject ISCMApi _SCMApi
+@inject IBPApi _BPApi
+
+@page "/SearchSCM"
+@using Microsoft.AspNetCore.Mvc
+@using TFDealFinder.App.API
+@using TFDealFinder.Core.Models
+<h1>Search Unusuals</h1>
+<h5>Search for Unusuals listed on the Steam Community Market by effects</h5>
+
+<label>Search effect</label>
+<input @bind="searchQuery" placeholder="Use + not space"/>
+<button class="btn btn-primary" @onclick="FilterByEffect">Search</button>
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Picture</th>
+        <th>Name of Hat</th>
+        <th>SCM Price</th>
+        <th>Backpack.tf price</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in TableEntry)
+    {
+        <tr>
+            <td><img style="max-height: 65px; max-width: 65px" src="https://community.cloudflare.steamstatic.com/economy/image/@item.ItemImage"/> </td>
+            <td>@item.ItemName</td>
+            <td>@item.ItemPrice</td>
+            <td>@(item.BPValue * 1.77) $ / @item.BPValue Keys</td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+<h3>Find price on Backpack.tf</h3>
+<input @bind="searchHat" placeholder="Hat name"/>
+<input @bind="searchEffect" placeholder="Effect"/>
+<button class="btn btn-dark" @onclick="PriceOnBackpack">Search</button>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Price in keys</th>
+        <th>Price in $USD</th>
+    </tr>
+    </thead>
+    <tbody>
+    @if(searchedPrice !=null && searchedPrice.Any())
+    @foreach (var item in searchedPrice)
+    {
+        <tr>
+            <td>@item.Value</td>
+            <td>@(item.Value * 1.77)</td>
+        </tr>
+    }
+    else if (searchedPrice != null)
+    {
+        <tr>
+            <td>This item has not been priced on Backpack.tf</td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+@code {
+    
+    private string searchQuery;
+
+    private MarketSearchResponseResults[]? MarketSearchResponseResultsArray = new MarketSearchResponseResults[0];
+
+    private string searchHat;
+
+    private string searchEffect;
+
+    private List<HistoryEntry>? backpackPrice = new List<HistoryEntry>();
+
+    private List<HistoryEntry>? searchedPrice = new List<HistoryEntry>();
+
+    private List<TableEntries>? TableEntry = new List<TableEntries>();
+    
+   
+    
+    protected override async Task OnInitializedAsync()
+    {
+        
+
+    }
+
+    private async Task PriceOnBackpack()
+    {
+        Console.WriteLine("Der liv er");
+        searchedPrice = await _BPApi.BPPrice(searchHat, searchEffect);
+        StateHasChanged();
+    }
+
+    private async Task FilterByEffect()
+    {
+        TableEntry = new List<TableEntries>();
+        Console.WriteLine("Der er liv");
+        MarketSearchResponseResultsArray = await _SCMApi.SCMEffectSearch(searchQuery);
+        foreach (var SCMItem in MarketSearchResponseResultsArray)
+        {
+            if (!SCMItem.Name.StartsWith("Unusual"))
+            {
+                continue;
+            }
+            backpackPrice = await _BPApi.BPPrice(SCMItem.Name, searchQuery);
+            double backpackprice = 0;
+            if (backpackPrice.LastOrDefault() != null)
+            {
+                backpackprice = backpackPrice.Last().Value;
+            }
+            TableEntry.Add(new TableEntries(SCMItem.AssetDescription.IconURL, SCMItem.Name, SCMItem.SellPriceText, backpackprice));
+            StateHasChanged();
+        }
+    }
+}

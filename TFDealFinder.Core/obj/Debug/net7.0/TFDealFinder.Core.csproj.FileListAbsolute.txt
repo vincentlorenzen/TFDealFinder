@@ -1,0 +1,11 @@
+C:\Users\vince\RiderProjects\TFDealFinder\TFDealFinder.Core\bin\Debug\net7.0\TFDealFinder.Core.deps.json
+C:\Users\vince\RiderProjects\TFDealFinder\TFDealFinder.Core\bin\Debug\net7.0\TFDealFinder.Core.dll
+C:\Users\vince\RiderProjects\TFDealFinder\TFDealFinder.Core\bin\Debug\net7.0\TFDealFinder.Core.pdb
+C:\Users\vince\RiderProjects\TFDealFinder\TFDealFinder.Core\obj\Debug\net7.0\TFDealFinder.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\vince\RiderProjects\TFDealFinder\TFDealFinder.Core\obj\Debug\net7.0\TFDealFinder.Core.AssemblyInfoInputs.cache
+C:\Users\vince\RiderProjects\TFDealFinder\TFDealFinder.Core\obj\Debug\net7.0\TFDealFinder.Core.AssemblyInfo.cs
+C:\Users\vince\RiderProjects\TFDealFinder\TFDealFinder.Core\obj\Debug\net7.0\TFDealFinder.Core.csproj.CoreCompileInputs.cache
+C:\Users\vince\RiderProjects\TFDealFinder\TFDealFinder.Core\obj\Debug\net7.0\TFDealFinder.Core.dll
+C:\Users\vince\RiderProjects\TFDealFinder\TFDealFinder.Core\obj\Debug\net7.0\refint\TFDealFinder.Core.dll
+C:\Users\vince\RiderProjects\TFDealFinder\TFDealFinder.Core\obj\Debug\net7.0\TFDealFinder.Core.pdb
+C:\Users\vince\RiderProjects\TFDealFinder\TFDealFinder.Core\obj\Debug\net7.0\ref\TFDealFinder.Core.dll
